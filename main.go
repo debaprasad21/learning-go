@@ -73,4 +73,21 @@ func main() {
 			}
 		}
 	}
+
+	// switch statement
+
+	// city := "Bangalore"
+
+	// switch city {
+	// case "Bangalore", "Hyderabad":
+	// 	// do something for bangalore & hyderabad conference tickets
+	// 	// as the code is similar for both cities
+	// case "Mumbai", "Delhi":
+	// 	// do something for mumbai & delhi conference tickets
+	// 	// as the code is similar for both cities
+	// case "Chennai":
+	// 	// do something for chennai conference tickets
+	// default:
+	// 	fmt.Println("No Valid city selected")
+	// }
 }
