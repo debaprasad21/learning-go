@@ -13,6 +13,15 @@ func main() {
 	fmt.Printf("We have %v tickets available and %v tickets remaining\n", conferenceTickets, remainingTickets,)
 	fmt.Println("Get your tickets to attend")
 
+	// when we know the values of the array
+	// var bookings = [50]string{"John", "Deba"}
+
+	// when we don't know the values of the array
+	// var bookings = [50]string{}
+
+	// alternate way to declare an array
+	var bookings [50]string
+
 	var fName string
 	var lName string
 	var email string
@@ -31,6 +40,12 @@ func main() {
 	fmt.Scan(&userTickets)
 
 	remainingTickets -= userTickets
+	bookings[0] = fName + " " + lName
+
+	fmt.Printf("The Whole Array: %v\n", bookings)
+	fmt.Printf("The first value of the Array: %v\n", bookings[0])
+	fmt.Printf("Array type: %T\n", bookings)
+	fmt.Printf("Array length: %v\n", len(bookings))
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", fName, lName, userTickets, email)
 	fmt.Printf("Remaining tickets for %v are %v\n", conferenceName, remainingTickets)	
