@@ -11,10 +11,7 @@ func main() {
 	var remainingTickets uint = 50
 	bookings := []string{}
 
-	fmt.Printf("conferenceTickets is %T, remainingTickets is %T, conferenceName is %T\n", conferenceTickets, remainingTickets, conferenceName)
-	fmt.Printf("Welcome to %v booking application\n", conferenceName)
-	fmt.Printf("We have %v tickets available and %v tickets remaining\n", conferenceTickets, remainingTickets)
-	fmt.Println("Get your tickets to attend")
+	greetUsers(conferenceName, conferenceTickets, remainingTickets)
 
 	for {
 		var fName string
@@ -73,21 +70,10 @@ func main() {
 			}
 		}
 	}
+}
 
-	// switch statement
-
-	// city := "Bangalore"
-
-	// switch city {
-	// case "Bangalore", "Hyderabad":
-	// 	// do something for bangalore & hyderabad conference tickets
-	// 	// as the code is similar for both cities
-	// case "Mumbai", "Delhi":
-	// 	// do something for mumbai & delhi conference tickets
-	// 	// as the code is similar for both cities
-	// case "Chennai":
-	// 	// do something for chennai conference tickets
-	// default:
-	// 	fmt.Println("No Valid city selected")
-	// }
+func greetUsers(confName string, confTickets int, remainingTickets uint) {
+	fmt.Printf("Welcome to %v booking application\n", confName)
+	fmt.Printf("We have %v tickets available and %v tickets remaining\n", confTickets, remainingTickets)
+	fmt.Println("Get your tickets to attend")
 }
