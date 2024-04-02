@@ -8,6 +8,8 @@ import (
 
 // Define variables as possible, only when the variables are common to all can be defined at package level
 
+// package variable, scope - package
+
 const conferenceTickets int = 50
 
 var bookings = []string{}
@@ -55,9 +57,9 @@ func greetUsers() {
 }
 
 func getFirstNames() []string {
-	fNames := []string{}
+	fNames := []string{} // local variable, scope - local
 	for _, booking := range bookings {
-		var names = strings.Fields(booking)
+		var names = strings.Fields(booking) // local variable, scope - local
 		fNames = append(fNames, names[0])
 
 	}
