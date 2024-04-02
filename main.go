@@ -14,7 +14,6 @@ var remainingTickets uint = 50
 var bookings = []string{}
 
 func main() {
-
 	greetUsers()
 
 	for {
@@ -62,15 +61,6 @@ func getFirstNames() []string {
 
 	}
 	return fNames
-}
-
-func validateUserInput(fName string, lName string, email string, userTickets uint) (bool, bool, bool) {
-	isValidName := len(fName) > 2 && len(lName) > 2
-	isValidEmail := strings.Contains(email, "@") && strings.Contains(email, ".")
-	isValidUserTickets := userTickets > 0 && userTickets <= remainingTickets
-
-	// In Go we can return any number of values from a function
-	return isValidName, isValidEmail, isValidUserTickets
 }
 
 func getUserInput() (string, string, string, uint) {
