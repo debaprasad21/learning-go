@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"sync"
+	"time"
 )
 
 // Define variables as possible, only when the variables are common to all can be defined at package level
@@ -26,38 +28,47 @@ var bookings = make([]UserData, 0)
 var conferenceName = "Go Conference"
 var remainingTickets uint = 50
 
+// waits for the launched goroutine to finish
+// Package sync provides basic synchronization primitives such as mutual exclusion locks
+// Add: Sets the number of goroutines to wait for (increases the counter by the provided number)
+// Wait: Blocks until the counter is zero
+// Done: Decreases the counter by one, So this is called by the goroutine to indicate that it has finished
+var wg = sync.WaitGroup{}
+
 func main() {
 	greetUsers()
 
-	for {
-		fName, lName, email, userTickets := getUserInput()
-		isValidName, isValidEmail, isValidUserTickets := validateUserInput(fName, lName, email, userTickets)
+	fName, lName, email, userTickets := getUserInput()
+	isValidName, isValidEmail, isValidUserTickets := validateUserInput(fName, lName, email, userTickets)
 
-		if isValidName && isValidEmail && isValidUserTickets {
+	if isValidName && isValidEmail && isValidUserTickets {
 
-			bookTicket(userTickets, fName, lName, email)
+		bookTicket(userTickets, fName, lName, email)
+		// to handle the concurrency
+		wg.Add(1)
+		go sendTicket(userTickets, fName, lName, email)
 
-			fmt.Printf("The first names of the bookings are: %v\n", getFirstNames())
+		fmt.Printf("The first names of the bookings are: %v\n", getFirstNames())
 
-			noTicketsRemaining := remainingTickets == 0
+		noTicketsRemaining := remainingTickets == 0
 
-			if noTicketsRemaining {
-				fmt.Println("All tickets are sold out")
-				// ending the infinite loop
-				break
-			}
-		} else {
-			if !isValidName {
-				fmt.Println("Your name is invalid. Please try again.")
-			}
-			if !isValidEmail {
-				fmt.Println("Your email is invalid. Please try again.")
-			}
-			if !isValidUserTickets {
-				fmt.Println("No of ticket entered is invalid. Please try again.")
-			}
+		if noTicketsRemaining {
+			fmt.Println("All tickets are sold out")
+			// ending the infinite loop
+			// break
+		}
+	} else {
+		if !isValidName {
+			fmt.Println("Your name is invalid. Please try again.")
+		}
+		if !isValidEmail {
+			fmt.Println("Your email is invalid. Please try again.")
+		}
+		if !isValidUserTickets {
+			fmt.Println("No of ticket entered is invalid. Please try again.")
 		}
 	}
+	wg.Wait()
 }
 
 func greetUsers() {
@@ -111,4 +122,13 @@ func bookTicket(userTickets uint, fName string, lName string, email string) {
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", fName, lName, userTickets, email)
 	fmt.Printf("Remaining tickets for %v are %v\n", conferenceName, remainingTickets)
+}
+
+func sendTicket(userTickets uint, fName string, lName string, email string) {
+	time.Sleep(50 * time.Second)
+	var ticket = fmt.Sprintf("%v tickets for %v %v", userTickets, fName, lName)
+	fmt.Println("----------------------")
+	fmt.Printf("Sending ticket:\n %v to email address %v\n", ticket, email)
+	fmt.Println("----------------------")
+	wg.Done()
 }
