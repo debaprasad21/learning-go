@@ -2,17 +2,27 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 // Define variables as possible, only when the variables are common to all can be defined at package level
 
 // package variable, scope - package
 
+// Define a struct for user data
+// type keyword is used to define a new data type
+// struct is a collection of fields
+type UserData struct {
+	fName       string
+	lName       string
+	email       string
+	noOfTickets uint
+}
+
+// data type is slice of struct - having list of struct defined in UserData
+// here 0 represents the length of the slice and increases as we add more elements
 const conferenceTickets int = 50
 
-var bookings = make([]map[string]string, 0) // data type is slice of map - having list of maps
-// here 0 represents the length of the slice and increases as we add more elements
+var bookings = make([]UserData, 0)
 var conferenceName = "Go Conference"
 var remainingTickets uint = 50
 
@@ -59,7 +69,7 @@ func greetUsers() {
 func getFirstNames() []string {
 	fNames := []string{}
 	for _, booking := range bookings {
-		fNames = append(fNames, booking["firstName"])
+		fNames = append(fNames, booking.fName)
 
 	}
 	return fNames
@@ -89,17 +99,12 @@ func getUserInput() (string, string, string, uint) {
 func bookTicket(userTickets uint, fName string, lName string, email string) {
 	remainingTickets -= userTickets
 
-	// create a map for the user
-	// make - to create empty map
-	// all keys have the same data type
-	// all values have the same data type
-	var userData = make(map[string]string)
-
-	userData["firstName"] = fName
-	userData["lastName"] = lName
-	userData["email"] = email
-	userData["noOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
-	// converting userTickets to string since in map all keys and values are strings
+	var userData = UserData{
+		fName:       fName,
+		lName:       lName,
+		email:       email,
+		noOfTickets: userTickets,
+	}
 
 	bookings = append(bookings, userData)
 	fmt.Printf("List of bookings: %v\n", bookings)
