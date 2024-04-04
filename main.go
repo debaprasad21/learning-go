@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 // Define variables as possible, only when the variables are common to all can be defined at package level
@@ -36,6 +37,9 @@ func main() {
 		if isValidName && isValidEmail && isValidUserTickets {
 
 			bookTicket(userTickets, fName, lName, email)
+			// go keyword is used to run the function in a separate goroutine
+			// here we see how concurrency is achieved
+			go sendTicket(userTickets, fName, lName, email)
 
 			fmt.Printf("The first names of the bookings are: %v\n", getFirstNames())
 
@@ -111,4 +115,12 @@ func bookTicket(userTickets uint, fName string, lName string, email string) {
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will receive a confirmation email at %v.\n", fName, lName, userTickets, email)
 	fmt.Printf("Remaining tickets for %v are %v\n", conferenceName, remainingTickets)
+}
+
+func sendTicket(userTickets uint, fName string, lName string, email string) {
+	time.Sleep(10 * time.Second)
+	var ticket = fmt.Sprintf("%v tickets for %v %v", userTickets, fName, lName)
+	fmt.Println("----------------------")
+	fmt.Printf("Sending ticket:\n %v to email address %v\n", ticket, email)
+	fmt.Println("----------------------")
 }
