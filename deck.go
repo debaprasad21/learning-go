@@ -12,6 +12,7 @@ type deck []string
 // the receiver function is called on a variable of type deck
 // the variable is available in the function as a variable called 'd'
 // the receiver function is called like this: cards.print()
+// it refers to this or otherwise we can call it as an instance inreference to Object Oriented Programming
 func (d deck) print() {
 	for i, card := range d {
 		fmt.Println(i, card, d)
