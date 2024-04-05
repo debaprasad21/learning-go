@@ -1,16 +1,12 @@
 package main
 
+import "fmt"
+
 func main() {
-	cards := deck{"Ace of Diamonds", newCard()}
-	cards = append(cards, "Six of Spades")
-
+	cards := newDeck()
+	cards.saveToFile("my_cards")
+	cards.shuffle()
 	cards.print()
-
-	abc := deck{"abc", "def"}
-	abc.print()
-
-}
-
-func newCard() string {
-	return "Five of Diamonds"
+	fmt.Println("----------")
+	fmt.Println(newDeckFromFile("my_cards"))
 }

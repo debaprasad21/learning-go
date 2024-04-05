@@ -1,3 +1,3 @@
-module booking-app
+module cards
 
 go 1.22.1
