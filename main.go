@@ -39,8 +39,11 @@ func (spanishBot) getGreeting() string {
 
 /*
 	Interfaces are not generic types
-	Interfaces are 'implicit'
-	Interfaces are a contract to help us manage types
+	Interfaces are 'implicit' - we don't manually have to say that our custom type satisfies some interface
+	 - hard to maintain which type satisfies which interface
+	Interfaces are a contract to help us manage types - Garbage in -> Garbage out.
+	 - If you don't implement the interface correctly, you will get an error
+	 - If our custom type's implementation of a function is broken, then interfaces wont help us!
 	Interfaces are tough, but very powerful
 	Interfaces are a way to make our code better
 
@@ -61,4 +64,16 @@ func (spanishBot) getGreeting() string {
 			getBotVersion() int
 			responseToUser(user) string
 		}
+*/
+
+/*
+	Concreate Type: Map, Struct, Int, String, EnglishBot, SpanishBot
+	 - We can create a value directly from a concreate type
+	 - built in types as well as our own custom types defined
+	Interface Type: bot
+	 - We can't create a value directly from an interface type
+
+	 Rules of interfaces:
+	 - We are not allowed to create a value directly from an interface type
+
 */
