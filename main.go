@@ -36,3 +36,20 @@ func (englishBot) getGreeting() string {
 func (spanishBot) getGreeting() string {
 	return "Hola!"
 }
+
+/*
+	Interfaces are not generic types
+	Interfaces are 'implicit'
+	Interfaces are a contract to help us manage types
+	Interfaces are tough, but very powerful
+	Interfaces are a way to make our code better
+
+	example:
+		type bot interface {
+			getGreeting(string, int) (string, error)
+		}
+		bot -> interface name
+		getGreeting -> method name
+		(string, int) -> list of arguments
+		(string, error) -> list of return types
+*/
