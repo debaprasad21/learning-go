@@ -44,7 +44,7 @@ func (spanishBot) getGreeting() string {
 	Interfaces are tough, but very powerful
 	Interfaces are a way to make our code better
 
-	example:
+	Example:
 		type bot interface {
 			getGreeting(string, int) (string, error)
 		}
@@ -52,4 +52,13 @@ func (spanishBot) getGreeting() string {
 		getGreeting -> method name
 		(string, int) -> list of arguments
 		(string, error) -> list of return types
+
+	One Interfaces can include in many methods/functions
+	Example:
+		type bot interface {
+			getGreeting(string, int) (string, error)
+			printGreeting(string) (string, error)
+			getBotVersion() int
+			responseToUser(user) string
+		}
 */
