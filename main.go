@@ -33,14 +33,45 @@ func main() {
 		},
 	}
 
-	// jimPointer corresponds to the memory address of jim,
 	// it has the address of the value of jim
 	// jim is a reference to the struct in memory the actual value of the struct
-	jimPointer := &jim
-	jimPointer.updateName("Jimmy")
+	// Pointer Shortcut
+	jim.updateName("Jimmy")
 
 	jim.print()
 
+	myArrays := [5]string{"Hi", "There", "How", "Are", "You"}
+	updateArray(myArrays)
+	fmt.Println(myArrays)
+
+	mySlices := [5]string{"Hi", "There", "How", "Are", "You"}
+	updateSlice(mySlices)
+	fmt.Println(mySlices)
+
+	name := "Bill"
+	fmt.Println(*&name)
+
+}
+
+/*
+	value types:		|   reference types:
+	--------------------| ---------------------
+	int					|	slices
+	float				|	maps
+	string				|	channels
+	bool				|	pointers
+	struct				|	functions
+
+*/
+
+// in slice, we don't need to use * to pass by reference
+// because they are already references
+func updateSlice(s [5]string) {
+	s[0] = "Bye"
+}
+
+func updateArray(s [5]string) {
+	s[0] = "Bye"
 }
 
 func (p person) print() {
@@ -65,4 +96,13 @@ func (pointerToPerson *person) updateName(newFirstName string) {
 	-------------------------------------------------------------------------------------
 	* Turn address into value with *address
 	* Turn value into address with &value
+*/
+
+/*
+	jimPointer := &jim
+	jimPointer.updateName("Jimmy") -> jimPointer is Type of *person, or a pointer to a person
+
+	jim.updateName("Jimmy") -> jim is Type of person, or a person
+
+	func (pointerToPerson *person) updateName() -> *person is a type of *person, it means we are working with a pointer to a person
 */
