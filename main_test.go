@@ -1,6 +1,12 @@
 package main
 
-import "testing"
+import (
+	"bufio"
+	"io"
+	"os"
+	"strings"
+	"testing"
+)
 
 // The file name should end with _test.go
 // The function name should start with Test follewed by the function name in main.go not in small letters
@@ -41,6 +47,90 @@ func Test_isPrime(t *testing.T) {
 
 		if e.msg != msg {
 			t.Errorf("%s: expected %s but got %s", e.name, e.msg, msg)
+		}
+	}
+}
+
+func Test_prompt(t *testing.T) {
+	// save a copy of os.Stdout
+	oldOut := os.Stdout
+
+	// create a read and write pipe
+	r, w, _ := os.Pipe()
+
+	// set os.Stdout to the write pipe
+	os.Stdout = w
+
+	prompt()
+
+	// close the write pipe
+	_ = w.Close()
+
+	// reset os.Stdout to what it was before
+	os.Stdout = oldOut
+
+	// read the output of our prompt() func from our read pipe
+	out, _ := io.ReadAll(r)
+
+	// perform our test
+	if string(out) != "-> " {
+		t.Errorf("incorrect prompt: expected -> but got %s", string(out))
+	}
+
+}
+
+func Test_intro(t *testing.T) {
+	// save a copy of os.Stdout
+	oldOut := os.Stdout
+
+	// create a read and write pipe
+	r, w, _ := os.Pipe()
+
+	// set os.Stdout to the write pipe
+	os.Stdout = w
+
+	intro()
+
+	// close the write pipe
+	_ = w.Close()
+
+	// reset os.Stdout to what it was before
+	os.Stdout = oldOut
+
+	// read the output of our prompt() func from our read pipe
+	out, _ := io.ReadAll(r)
+
+	// perform our test
+	if !strings.Contains(string(out), "Enter a whole number") {
+		t.Errorf("intro test not correct but got %s", string(out))
+	}
+}
+
+func Test_checkNumbers(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{"prime", "7", "7 is a prime number!"},
+		{"not prime", "8", "8 is not a prime number because it is divisible by 2"},
+		{"zero", "0", "0 is not a prime number"},
+		{"negative", "-1", "-1 is negative number & is not a prime number"},
+		{"invalid", "a", "Please enter a valid number"},
+		{"quit", "q", "Goodbye!"},
+	}
+
+	for _, e := range tests {
+
+		// input the number
+		input := strings.NewReader(e.input)
+
+		reader := bufio.NewScanner(input)
+
+		res, _ := checkNumbers(reader)
+
+		if !strings.EqualFold(res, e.expected) {
+			t.Errorf("%s: expected %s but got %s", e.name, e.expected, res)
 		}
 	}
 }
