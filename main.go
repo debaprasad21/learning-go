@@ -1,36 +1,33 @@
 package main
 
-import (
-	"fmt"
-	"io"
-	"net/http"
-	"os"
-)
-
-type logWriter struct{}
+import "fmt"
 
 func main() {
-	resp, err := http.Get("http://www.google.com")
-	if err != nil {
-		fmt.Println("Error: ", err)
-		os.Exit(1)
-	}
 
-	// bs := make([]byte, 99999) // Create a byte slice with 99999 elements
-	// resp.Body.Read(bs)        // Read the response body into the byte slice
+	n := 3
 
-	// fmt.Println(string(bs)) // Print the response body
-
-	lw := logWriter{}
-
-	io.Copy(lw, resp.Body)
+	_, msg := isPrime(n)
+	fmt.Println(msg)
 
 }
 
-// go through the video 67, 68, 69, 70, 71 of Udemy -> Go: The Complete Developer's Guide (Golang)
+func isPrime(n int) (bool, string) {
+	// 0 & 1 are not prime numbers
+	if n == 0 || n == 1 {
+		return false, fmt.Sprintf("%d is not a prime number", n)
+	}
 
-func (logWriter) Write(bs []byte) (int, error) {
-	fmt.Println(string(bs))
-	fmt.Println("asasa", len(bs))
-	return len(bs), nil
+	// negative numbers are not prime numbers
+	if n < 0 {
+		return false, fmt.Sprintf("%d is negative number & is not a prime number", n)
+	}
+
+	// use the modulus operator to check if the number is prime
+	for i := 2; i < n/2; i++ {
+		if n%i == 0 {
+			return false, fmt.Sprintf("%d is not a prime number because it is divisible by %d", n, i)
+		}
+	}
+
+	return true, fmt.Sprintf("%d is a prime number!", n)
 }
