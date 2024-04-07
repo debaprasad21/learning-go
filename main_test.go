@@ -8,21 +8,32 @@ import "testing"
 // The function should be in the same package as the main code
 // The function should be in the same directory as the main code
 func Test_isPrime(t *testing.T) {
-	result, msg := isPrime(0)
-	if result {
-		t.Errorf("with %d as test parameter, got true, but expected false", 0)
+	// creating a slice of struct to test the isPrime function
+	// test table
+	// entries to test various scenarios
+	primeTests := []struct {
+		name     string
+		testNum  int
+		expected bool
+		msg      string
+	}{
+		{"prime", 7, true, "7 is a prime number!"},
+		{"not prime", 8, false, "8 is not a prime number because it is divisible by 2"},
 	}
 
-	if msg != "0 is not a prime number" {
-		t.Errorf("Wrong message returned:- %s", msg)
-	}
+	for _, e := range primeTests {
+		result, msg := isPrime(e.testNum)
 
-	result, msg = isPrime(7)
-	if !result {
-		t.Errorf("with %d as test parameter, got false, but expected true", 7)
-	}
+		if e.expected && !result {
+			t.Errorf("%s: expected true but got false", e.name)
+		}
 
-	if msg != "7 is a prime number!" {
-		t.Errorf("Wrong message returned:- %s", msg)
+		if !e.expected && result {
+			t.Errorf("%s: expected false but got true", e.name)
+		}
+
+		if e.msg != msg {
+			t.Errorf("%s: expected %s but got %s", e.name, e.msg, msg)
+		}
 	}
 }
