@@ -20,6 +20,7 @@ import (
 // go test -coverprofile=coverage.out -> to check the code coverage and save the results in a file, here the filename is coverage.out
 // go tool cover -html=coverage.out -> to view the code coverage in a browser
 // go test -run Test_isPrime -> to run a specific test
+// go test -run Test_alpha -> to run all the tests that have alpha in their name, we have to rename the suit & group of functions with that name
 func Test_isPrime(t *testing.T) {
 	// creating a slice of struct to test the isPrime function
 	// test table
